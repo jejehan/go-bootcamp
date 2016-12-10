@@ -1,7 +1,6 @@
 package main
 
 import "fmt"
-import "reflect"
 
 type Stringer interface {
 	String() string
@@ -16,7 +15,10 @@ func (s *fakeString) String() string {
 }
 
 func printString(value interface{}) {
-	fmt.Println(reflect.TypeOf(value))
+
+	const f = "%T\n"
+	fmt.Printf(f, value)
+
 	switch str := value.(type) {
 	case string:
 		fmt.Println(str)
