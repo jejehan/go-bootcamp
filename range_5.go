@@ -5,12 +5,12 @@ import (
 )
 
 func main() {
-	pow := make([]int, 10)
-	for i := range pow {
-		if i%2 == 0 {
-			continue
-		}
-		pow[i] = 1 << uint(i)
+	cities := map[string]int{
+		"New York":    123123123,
+		"Los Angeles": 23565656,
+		"Chicago":     1234534567,
 	}
-	fmt.Println(pow)
+	for key, value := range cities {
+		fmt.Printf("%s had %d inhabitans\n", key, value)
+	}
 }
