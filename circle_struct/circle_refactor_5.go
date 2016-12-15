@@ -7,8 +7,12 @@ import (
 	"math"
 )
 
+//interface sama seperti struct bedanya
+//isi dari interface adalah method method
+//sedangkan struct adalah fields
 type Shape interface {
 	area() float64
+	perimeter() float64
 }
 
 type Circle struct {
@@ -17,6 +21,10 @@ type Circle struct {
 
 func (c *Circle) area() float64 {
 	return math.Pi * (c.r * c.r)
+}
+
+func (c *Circle) perimeter() float64 {
+	return 888
 }
 
 func distance(x1, y1, x2, y2 float64) float64 {
@@ -35,6 +43,10 @@ func (r *Rectangle) area() float64 {
 	return l * w
 }
 
+func (r *Rectangle) perimeter() float64 {
+	return 666
+}
+
 func totalArea(shape ...Shape) float64 {
 	var area float64
 	for _, s := range shape {
@@ -43,6 +55,8 @@ func totalArea(shape ...Shape) float64 {
 	return area
 }
 
+//MultiShape memberikan kesempatan untuk mengcompose
+//perhitungan yang sama
 type MultiShape struct {
 	shape []Shape
 }
@@ -55,13 +69,23 @@ func (m *MultiShape) area() float64 {
 	return area
 }
 
+func (m *MultiShape) perimeter() float64 {
+	var perimeter float64
+	for _, s := range m.shape {
+		perimeter += s.perimeter()
+	}
+	return perimeter
+}
+
 func main() {
 	c := Circle{0, 0, 5}
-	fmt.Println(c.area())
-	r := Rectangle{0, 0, 10, 10}
-	fmt.Println(r.area())
-	fmt.Println(totalArea(&c, &r))
+	//fmt.Println(c.area())
+	r := Rectangle{0, 0, 2, 2}
+	//fmt.Println(r.area())
+	//fmt.Println(r.perimeter())
+	//fmt.Println(totalArea(&c, &r))
 
-	m := MultiShape{[]Shape{&c}}
-	fmt.Println(m.area())
+	m := MultiShape{[]Shape{&c, &r}}
+	//fmt.Println(m.area())
+	fmt.Println(m.perimeter())
 }
